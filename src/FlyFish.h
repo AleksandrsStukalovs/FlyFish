@@ -709,9 +709,9 @@ public:
         const float mult{ -sin(angle * DEG_TO_RAD / 2) / line.Norm() };
         return Motor{
             cos(angle * DEG_TO_RAD /2),
-            0,
-            0,
-            0,
+            mult * line[0],
+            mult * line[1],
+            mult * line[2],
             mult * line[3],
             mult * line[4],
             mult * line[5],
