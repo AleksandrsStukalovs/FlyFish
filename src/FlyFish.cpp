@@ -1845,8 +1845,8 @@ return res;
     MultiVector res{};
     if (vectorNorm != 0)
     {
-        float factor{sinh(vectorNorm) / vectorNorm};
-        res[0] = cosh(vectorNorm);
+        float const factor{sinhf(vectorNorm) / vectorNorm};
+        res[0] = coshf(vectorNorm);
         res[1] = data[0] * factor;
         res[2] = data[1] * factor;
         res[3] = data[2] * factor;
@@ -1904,9 +1904,9 @@ return res;
 
     if (trivectorNorm != 0)
     {
-        float factor{sin(trivectorNorm) / trivectorNorm};
+        float const factor{sinf(trivectorNorm) / trivectorNorm};
         res = MultiVector{
-            cos(trivectorNorm),
+            cosf(trivectorNorm),
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             data[0] * factor,
             data[1] * factor,

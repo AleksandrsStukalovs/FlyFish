@@ -362,7 +362,7 @@ public:
 
     [[nodiscard]] MultiVector operator! () const;
 
-    friend MultiVector Gexp(const MultiVector& m)
+    friend MultiVector Gexp([[maybe_unused]] MultiVector& m)
     {
         throw std::runtime_error("Not implemented");
     }
@@ -546,7 +546,7 @@ public:
     [[nodiscard]] MultiVector operator ^ (const BiVector& b) const;
     [[nodiscard]] TriVector operator ^ (const Vector& b) const;
     [[nodiscard]] Motor operator ^ (const Motor& b) const;
-    
+
     [[nodiscard]] BiVector operator! () const;
 
     [[nodiscard]] Motor Gexp() const;
@@ -707,9 +707,9 @@ public:
 
     [[nodiscard]] static Motor Rotation(float angle, const BiVector& line)
     {
-        const float mult{ -sin(angle * DEG_TO_RAD / 2) / line.Norm() };
+        const float mult{ -sinf(0.5f * angle * DEG_TO_RAD) / line.Norm() };
         return Motor{
-            cos(angle * DEG_TO_RAD /2),
+            cosf(0.5f * angle * DEG_TO_RAD),
             mult * line[0],
             mult * line[1],
             mult * line[2],
