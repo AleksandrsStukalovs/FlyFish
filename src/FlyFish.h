@@ -13,6 +13,7 @@ class Motor;
 class GANull;
 
 constexpr float DEG_TO_RAD = std::numbers::pi_v<float> / 180.0f;
+constexpr float RAD_TO_DEG = 1 / DEG_TO_RAD;
 
 template <typename Derived, std::size_t DataSize>
 class GAElement
