@@ -848,3 +848,53 @@ public:
         return GANull{};
     }
 };
+
+///////////////////////////////////////////////////////////////////////////////////
+/// Named functions
+///////////////////////////////////////////////////////////////////////////////////
+
+// NOTE: Since most of the operators implement different logic with
+// different types, these functions will do the same, which is
+// not desired, but still subjectively acceptable to avoid code duplication.
+// A solution in this case is to make named functions implement the logic
+// and then operators using the named functions instead of
+// doing it vice versa.
+
+namespace GA {
+    // Inverse
+    [[nodiscard]] inline MultiVector Inverse(const MultiVector & a) {
+        return ~a;
+    }
+
+    // Gep
+    template<typename A, typename B> requires requires(const A& a, const B& b) {
+        a * b;// Checking if the expression is valid
+    }
+    [[nodiscard]] auto Gep(const A& a, const B& b) {
+        return a * b;
+    }
+
+    // Inner
+    template<typename A, typename B> requires requires(const A& a, const B& b) { a | b; }
+    [[nodiscard]] auto Inner(const A& a, const B& b) {
+        return a | b;
+    }
+
+    // Outer
+    template<typename A, typename B> requires requires(const A& a, const B& b) { a ^ b; }
+    [[nodiscard]] auto Outer(const A& a, const B& b) {
+        return a ^ b;
+    }
+
+    // Join
+    template<typename A, typename B> requires requires(const A& a, const B& b) { a & b; }
+    [[nodiscard]] auto Join(const A& a, const B& b) {
+        return a & b;
+    }
+
+    // Poincare dual
+    template<typename T> requires requires(const T& value) { !value; }
+    [[nodiscard]] auto PoincareDual(const T& value ) {
+        return !value;
+    }
+}

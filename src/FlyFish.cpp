@@ -2,12 +2,6 @@
 
 // Type conversions
 
-[[nodiscard]] BiVector Motor::Grade2() const
-{
-    return {
-        data[1], data[2], data[3], data[4], data[5], data[6]
-    };
-}
 [[nodiscard]] Vector MultiVector::Grade1() const
 {
     return Vector{
@@ -48,6 +42,12 @@
         data[9],
         data[10],
         data[15]
+    };
+}
+[[nodiscard]] BiVector Motor::Grade2() const
+{
+    return {
+        data[1], data[2], data[3], data[4], data[5], data[6]
     };
 }
 
@@ -138,6 +138,8 @@ MultiVector& MultiVector::operator=(Motor&& b) noexcept
     return *this;
 };
 
+// Inverse
+
 [[nodiscard]] MultiVector MultiVector::operator~() const
 {
     float s{}, t0{}, t1{}, t2{}, t3{}, ps{};
@@ -170,7 +172,9 @@ MultiVector& MultiVector::operator=(Motor&& b) noexcept
     return numer / denom;
 }
 
-// Geometric Product
+///////////////////////////////////////////////////////////////////////////////////
+/// Geometric Product
+///////////////////////////////////////////////////////////////////////////////////
 
 // MultiVector
 [[nodiscard]] MultiVector MultiVector::operator* (const MultiVector& b) const {
@@ -595,7 +599,10 @@ return res;
     return res;
 };
 
-// Inner
+
+///////////////////////////////////////////////////////////////////////////////////
+/// Inner Product
+///////////////////////////////////////////////////////////////////////////////////
 
 // MultiVector
 [[nodiscard]] MultiVector MultiVector::operator| (const MultiVector& b) const
@@ -963,7 +970,9 @@ return res;
     return res;
 };
 
-// Outer Product
+///////////////////////////////////////////////////////////////////////////////////
+/// Outer Product
+///////////////////////////////////////////////////////////////////////////////////
 
 // MultiVector
 [[nodiscard]] MultiVector MultiVector::operator^(const MultiVector& b) const
@@ -1339,7 +1348,9 @@ return res;
     return res;
 }
 
-// Regressive Product
+///////////////////////////////////////////////////////////////////////////////////
+/// Regressive Product(Join)
+///////////////////////////////////////////////////////////////////////////////////
 
 // MultiVector
 [[nodiscard]] MultiVector MultiVector::operator& (const MultiVector& b) const
@@ -1694,7 +1705,10 @@ return res;
     return res;
 }
 
-// Dual operator
+///////////////////////////////////////////////////////////////////////////////////
+/// Poincare dual
+///////////////////////////////////////////////////////////////////////////////////
+
 [[nodiscard]] MultiVector MultiVector::operator! () const
 {
     return {
@@ -1749,7 +1763,10 @@ return res;
     };
 }
 
-// Exponential method
+///////////////////////////////////////////////////////////////////////////////////
+/// Exponential method
+///////////////////////////////////////////////////////////////////////////////////
+
 // MultiVector Gexp(const MultiVector& m)
 // {
     /*
@@ -1899,7 +1916,7 @@ return res;
 
 [[nodiscard]] MultiVector TriVector::Gexp() const
 {
-    float trivectorNorm{this->Norm()};
+    float const trivectorNorm{this->Norm()};
     MultiVector res{};
 
     if (trivectorNorm != 0)
